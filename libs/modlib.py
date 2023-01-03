@@ -1,5 +1,7 @@
 import os
+import shutil
 import requests
+from multipledispatch import dispatch
 
 
 def create(data: str) -> tuple[str, str, str]:
@@ -15,6 +17,7 @@ class Mod:
         self.name = name
         self.dir = mod_dir
         self.path = mod_path
+        self.local_path = os.path.join('mods', self.dir, self.name)
         self.full_path = os.path.join(self.path, self.name)
 
     @classmethod
@@ -54,6 +57,7 @@ class Mod:
                 return False
 
 
+@dispatch(str)
 def read_mods(path: str) -> list[Mod]:
     mod_list = []
     with open('config/mods.conf', 'r') as mds:
@@ -61,6 +65,19 @@ def read_mods(path: str) -> list[Mod]:
             m = m.strip()
             if m != '' and m[0] != "#":
                 mod_list.append(Mod.create_from_str(m, path))
+    return mod_list
+
+
+@dispatch(str, str)
+def read_mods(path: str, lib: str) -> list[Mod]:
+    mod_list = []
+    with open('config/mods.conf', 'r') as mds:
+        for m in mds:
+            m = m.strip()
+            if m != '' and m[0] != "#":
+                mod = Mod.create_from_str(m, path)
+                if mod.dir == lib:
+                    mod_list.append(mod)
     return mod_list
 
 
@@ -79,3 +96,27 @@ def get_mod_by_name(name: str, mods: list[Mod]) -> Mod:
     for mod in mods:
         if name == mod.name:
             return mod
+
+
+def delete_diff(old: list[str], new: list[str]) -> set[str]:
+    new = set(new)
+    old = set(old)
+    return old - new
+
+
+def download_diff(old: list[str], new: list[str]) -> set[str]:
+    new = set(new)
+    old = set(old)
+    return new - old
+
+
+def refresh_mods(old: list[str], new: list[str], path: str, is_organised: bool):
+    for mod in delete_diff(old, new):
+        print(f'Removing: {mod}')
+        os.remove(os.path.join(path, mod))
+    for mod in download_diff(old, new):
+        if not os.path.exists(os.path.join(path, mod)):
+            rel_path = get_mod_by_name(mod, read_mods(path)).local_path
+            print(f"Copying: {rel_path} -> {path}")
+            shutil.copy(rel_path, path)
+
