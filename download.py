@@ -6,7 +6,7 @@ from pick import pick
 from libs.modlib import *
 
 r = requests.get("https://raw.githubusercontent.com/joshika39/minecraft-mods/main/config/mods.conf", allow_redirects=True)
-open("config/mods.conf.loc", 'wb').write(r.content)
+open(mod_conf, 'wb').write(r.content)
 
 
 parser = argparse.ArgumentParser()

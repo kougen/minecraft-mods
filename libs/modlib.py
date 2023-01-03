@@ -3,6 +3,7 @@ import shutil
 import requests
 from multipledispatch import dispatch
 
+mod_conf = 'config/mods.conf.loc'
 
 def create(data: str) -> tuple[str, str, str]:
     mod_dir, domain, mod_data = data.split(' ')[0], data.split(' ')[1], data.split(' ')[2]
@@ -60,7 +61,7 @@ class Mod:
 @dispatch(str)
 def read_mods(path: str) -> list[Mod]:
     mod_list = []
-    with open('config/mods.conf', 'r') as mds:
+    with open(mod_conf, 'r') as mds:
         for m in mds:
             m = m.strip()
             if m != '' and m[0] != "#":
@@ -71,7 +72,7 @@ def read_mods(path: str) -> list[Mod]:
 @dispatch(str, str)
 def read_mods(path: str, lib: str) -> list[Mod]:
     mod_list = []
-    with open('config/mods.conf', 'r') as mds:
+    with open(mod_conf, 'r') as mds:
         for m in mds:
             m = m.strip()
             if m != '' and m[0] != "#":
