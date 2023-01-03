@@ -29,13 +29,17 @@ if($mode -eq 0){
             $link = "https://$($options[1]).forgecdn.net/files/$($options[2])"
             $filename = $options[2].Split('/')[2]
     
-            try { 
-                Write-Host "Downloading: $link to $path\$filename"
-                Invoke-WebRequest -Uri $link -OutFile "$path\$filename"
-            }
-            catch{
-                Write-Host "Download failed for: $link"
-            }
+            if(!(Test-Path -Path "$path\$filename")){
+                try { 
+                    Write-Host "Downloading: $link to $path\$filename"
+                    Invoke-WebRequest -Uri $link -OutFile "$path\$filename"
+                }
+                catch{
+                    Write-Host "Download failed for: $link"
+                }
+            }  
+
+
             
         }
     }
