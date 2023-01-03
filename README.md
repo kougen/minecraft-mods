@@ -12,3 +12,9 @@ Suggested git client: <https://git-fork.com/update/win/ForkInstaller.exe>
     - *(If running of the scripts are disabled run the following in a Terminal ran as **Admin**: `Set-ExecutionPolicy Unrestricted`)*
 6. Run the following command: `cd $HOME\Fork\minecraft-mods\; .\download.ps1`
 7. Follow the following sequence in the options: `from-cdn` -> `client` -> `Yes`
+
+#### Other useful options
+
+- command to get the ip from the terminal: `cd $HOME\Fork\minecraft-mods\; .\print-ip.ps1`
+- command to open the ports for minecraft server(25565):
+  - start an **Admin** Terminal end run the following command: `cd $HOME\Fork\minecraft-mods\; .\open-ports.ps1`
