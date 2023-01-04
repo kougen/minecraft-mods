@@ -7,6 +7,15 @@ from sys import exit
 mod_conf = 'config/mods.conf.loc'
 mod_conf_local = 'config/mods.conf'
 
+
+def is_downloadable(request) -> bool:
+    response = requests.head(request)
+    if response.status_code == 200:
+        return True
+    else:
+        return False
+
+
 def create(data: str) -> tuple[str, str, str]:
     mod_dir, domain, mod_data = data.split(' ')[0], data.split(' ')[1], data.split(' ')[2]
     mod_name = mod_data.split('/')[2]
@@ -50,10 +59,14 @@ class Mod:
 
         if not os.path.exists(full_path):
             try:
-                print(f'Downloading: {self.link}')
-                r = requests.get(self.link, allow_redirects=True)
-                open(full_path, 'wb').write(r.content)
-                return True
+                if is_downloadable(self.link):
+                    print(f'Downloading: {self.link}')
+                    r = requests.get(self.link, allow_redirects=True)
+                    open(full_path, 'wb').write(r.content)
+                    return True
+                else:
+                    print(f'Download failed for: {self.link}')
+                    return False
             except requests.exceptions.HTTPError as err:
                 print(f'Download failed for: {self.link}')
                 print(err)

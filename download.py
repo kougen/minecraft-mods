@@ -58,7 +58,7 @@ def delete_files(path: str, ext: str):
 target_path = os.path.join(target_path, ".minecraft", "mods")
 
 if args.localmods:
-    update_local_files(True)
+    update_local_files(False)
     exit(0)
 
 if args.clear:
