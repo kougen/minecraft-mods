@@ -19,6 +19,8 @@ group = parser.add_mutually_exclusive_group()
 group.add_argument('--server', '-s', action='store_true')
 group.add_argument('--client', '-c', action='store_true')
 group.add_argument('--localmods', '-l', action='store_true')
+group.add_argument('--reset', '-r', action='store_true')
+group.add_argument('--clear', action='store_true')
 args = parser.parse_args()
 
 if platform == "linux" or platform == "linux2":
@@ -57,6 +59,21 @@ target_path = os.path.join(target_path, ".minecraft", "mods")
 
 if args.localmods:
     update_local_files(True)
+    exit(0)
+
+if args.clear:
+    for folder in os.listdir('mods'):
+        path = os.path.join('mods', folder) 
+        delete_files(path, ".jar")
+        os.rmdir(path)
+    delete_files(target_path, ".jar")
+    exit(0)
+
+if args.reset:
+    if os.path.exists(mod_conf_local):
+        if os.path.exists(mod_conf):
+            os.remove(mod_conf)
+        shutil.copyfile(mod_conf_local, mod_conf)
     exit(0)
 
 if args.server:

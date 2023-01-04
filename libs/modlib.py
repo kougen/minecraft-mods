@@ -125,7 +125,7 @@ def refresh_mods(old: list[str], new: list[str], path: str, is_organised: bool):
         os.remove(os.path.join(path, mod))
     for mod in download_diff(old, new):
         if not os.path.exists(os.path.join(path, mod)):
-            rel_path = get_mod_by_name(mod, read_mods(path)).local_path
+            rel_path = get_mod_by_name(mod, read_mods(path, False)).local_path
             print(f"Copying: {rel_path} -> {path}")
             shutil.copy(rel_path, path)
 
