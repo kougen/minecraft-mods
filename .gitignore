@@ -6,3 +6,6 @@
 build/
 dist/
 *.spec
+/**/__pycache__/
+data/*
+!data/mods.zip

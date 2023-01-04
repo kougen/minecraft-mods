@@ -1,0 +1,64 @@
+[
+    {
+        "id": "3482306",
+        "domain": "mediafilez",
+        "filename": "ftb-backups-2.1.2.2.jar",
+        "depend_on": [
+            "3553840"
+        ],
+        "state": "install"
+    },
+    {
+        "id": "4297564",
+        "domain": "mediafilez",
+        "filename": "ftb-chunks-forge-1605.3.4-build.220.jar",
+        "depend_on": [
+            "3553840"
+        ],
+        "state": "install"
+    },
+    {
+        "id": "3510643",
+        "domain": "mediafilez",
+        "filename": "ftb-essentials-1605.1.5-build.32.jar",
+        "depend_on": [
+            "3553840"
+        ],
+        "state": "install"
+    },
+    {
+        "id": "3553840",
+        "domain": "mediafilez",
+        "filename": "ftb-library-forge-1605.3.4-build.90.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3672855",
+        "domain": "mediafilez",
+        "filename": "ftb-quests-forge-1605.3.6-build.98.jar",
+        "depend_on": [
+            "3376819",
+            "3553840"
+        ],
+        "state": "install"
+    },
+    {
+        "id": "3802698",
+        "domain": "mediafilez",
+        "filename": "ftb-ranks-forge-1605.1.6-build.33.jar",
+        "depend_on": [
+            "3553840"
+        ],
+        "state": "install"
+    },
+    {
+        "id": "3535953",
+        "domain": "mediafilez",
+        "filename": "ftb-teams-forge-1605.2.3-build.40.jar",
+        "depend_on": [
+            "3553840"
+        ],
+        "state": "install"
+    }
+]

@@ -1,0 +1,79 @@
+[
+	{
+		"id": "3686480",
+		"domain": "mediafilez",
+		"filename": "appleskin-forge-mc1.16.x-2.4.0.jar",
+		"depend_on": [],
+		"state": "install"
+	},
+	{
+		"id": "3520850",
+		"domain": "mediafilez",
+		"filename": "ConfigMenusForge-v1.2.0-1.16.5-Forge.jar",
+		"depend_on": [],
+		"state": "install"
+	},
+	{
+		"id": "3330406",
+		"domain": "mediafilez",
+		"filename": "CraftingTweaks_1.16.5-12.2.1.jar",
+		"depend_on": [],
+		"state": "install"
+	},
+	{
+		"id": "3505181",
+		"domain": "mediafilez",
+		"filename": "InventoryHud_%5b1.16.2-1.16.5%5d.forge-3.4.1.jar",
+		"depend_on": [],
+		"state": "install"
+	},
+	{
+		"id": "3910873",
+		"domain": "mediafilez",
+		"filename": "Jade-1.16.4-2.8.3.jar",
+		"depend_on": [],
+		"state": "install"
+	},
+	{
+		"id": "3765938",
+		"domain": "mediafilez",
+		"filename": "ModernUI-1.16.5-2.7.1.105-universal.jar",
+		"depend_on": [],
+		"state": "install"
+	},
+	{
+		"id": "3182258",
+		"domain": "mediafilez",
+		"filename": "Neat+1.7-27.jar",
+		"depend_on": [],
+		"state": "install"
+	},
+	{
+		"id": "3420107",
+		"domain": "mediafilez",
+		"filename": "SoL-Carrot-1.16.5-1.10.1.jar",
+		"depend_on": [],
+		"state": "install"
+	},
+	{
+		"id": "3552849",
+		"domain": "mediafilez",
+		"filename": "VisualWorkbench-v1.1.0-1.16.5.jar",
+		"depend_on": [],
+		"state": "install"
+	},
+	{
+		"id": "4181099",
+		"domain": "mediafilez",
+		"filename": "Xaeros_Minimap_22.17.0_Forge_1.16.5.jar",
+		"depend_on": [],
+		"state": "install"
+	},
+	{
+		"id": "4193003",
+		"domain": "mediafilez",
+		"filename": "XaerosWorldMap_1.28.7_Forge_1.16.5.jar",
+		"depend_on": [],
+		"state": "install"
+	}
+]

@@ -1,0 +1,86 @@
+[
+    {
+        "id": "3857643",
+        "domain": "mediafilez",
+        "filename": "architectury-1.32.66.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3326041",
+        "domain": "mediafilez",
+        "filename": "AutoRegLib-1.6-49.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3732239",
+        "domain": "mediafilez",
+        "filename": "Bookshelf-Forge-1.16.5-10.4.32.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3441028",
+        "domain": "mediafilez",
+        "filename": "citadel-1.8.1-1.16.5.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "4022663",
+        "domain": "mediafilez",
+        "filename": "cofh_core-1.16.5-1.5.2.22.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3456953",
+        "domain": "mediafilez",
+        "filename": "curios-forge-1.16.5-4.0.5.3.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "4182600",
+        "domain": "mediafilez",
+        "filename": "geckolib-forge-1.16.5-3.0.106.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3675495",
+        "domain": "mediafilez",
+        "filename": "kotlinforforge-1.17.0-obf.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3750838",
+        "domain": "mediafilez",
+        "filename": "Placebo-1.16.5-4.7.0.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3517499",
+        "domain": "mediafilez",
+        "filename": "PuzzlesLib-v1.0.15-1.16.5-Forge.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3517008",
+        "domain": "mediafilez",
+        "filename": "selene-1.16.5-1.9.0.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3498310",
+        "domain": "mediafilez",
+        "filename": "structure_gel-1.16.5-1.7.8.jar",
+        "depend_on": [],
+        "state": "install"
+    }
+]

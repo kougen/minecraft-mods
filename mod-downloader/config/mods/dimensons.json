@@ -1,0 +1,23 @@
+[
+    {
+        "id": "3990329",
+        "domain": "mediafilez",
+        "filename": "Atum-1.16.5-2.2.12.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3411324",
+        "domain": "mediafilez",
+        "filename": "blue_skies-1.16.5-1.1.3.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "",
+        "domain": "mediafilez",
+        "filename": "TheAbyss2+2.2.3-4+1.16.5.jar",
+        "depend_on": [],
+        "state": "inactive"
+    }
+]

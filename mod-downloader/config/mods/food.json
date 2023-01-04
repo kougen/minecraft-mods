@@ -1,0 +1,64 @@
+[
+    {
+        "id": "4074702",
+        "domain": "mediafilez",
+        "filename": "Aquaculture-1.16.5-2.1.23.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3756671",
+        "domain": "mediafilez",
+        "filename": "culinaryconstruct-forge-1.16.5-4.0.1.0.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3780722",
+        "domain": "mediafilez",
+        "filename": "culturaldelights-1.16.5-0.9.2.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3765350",
+        "domain": "mediafilez",
+        "filename": "FarmersDelight-1.16.5-0.6.0.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3276350",
+        "domain": "mediafilez",
+        "filename": "pamhc2crops-1.16.3-1.0.2.jar",
+        "depend_on": [
+            "3190867"
+        ],
+        "state": "install"
+    },
+    {
+        "id": "3190867",
+        "domain": "mediafilez",
+        "filename": "pamhc2foodcore-1.16.3-1.0.2.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3418627",
+        "domain": "mediafilez",
+        "filename": "pamhc2foodextended-1.16.3-1.0.4.jar",
+        "depend_on": [
+            "3190867"
+        ],
+        "state": "install"
+    },
+    {
+        "id": "3281234",
+        "domain": "mediafilez",
+        "filename": "pamhc2trees-1.16.3-1.0.1.jar",
+        "depend_on": [
+            "3190867"
+        ],
+        "state": "install"
+    }
+]

@@ -1,0 +1,37 @@
+[
+    {
+        "id": "3156420",
+        "domain": "mediafilez",
+        "filename": "DataFixerSlayer+1.0-3.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3590413",
+        "domain": "mediafilez",
+        "filename": "FastLeafDecay-v25.2.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3955105",
+        "domain": "mediafilez",
+        "filename": "magnesium_extras-mc1.16.5_v1.4.0.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3910090",
+        "domain": "mediafilez",
+        "filename": "performant-1.16.2-5-3.99m.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3211323",
+        "domain": "mediafilez",
+        "filename": "randompatches-2.4.4-forge.jar",
+        "depend_on": [],
+        "state": "install"
+    }
+]

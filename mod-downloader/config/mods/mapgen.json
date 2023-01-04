@@ -1,0 +1,51 @@
+[
+    {
+        "id": "3360574",
+        "domain": "mediafilez",
+        "filename": "BiomesOPlenty-1.16.5-13.1.0.477-universal.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3239647",
+        "domain": "mediafilez",
+        "filename": "Bountiful-1.16.4-3.3.1.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3434458",
+        "domain": "mediafilez",
+        "filename": "CustomStartingGear-1.16.5-2.0.3-universal.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3838362",
+        "domain": "mediafilez",
+        "filename": "EnchantmentDescriptions-1.16.5-7.1.20.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "4110873",
+        "domain": "mediafilez",
+        "filename": "lootr-1.16.5-0.1.15.46.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3515707",
+        "domain": "mediafilez",
+        "filename": "Waystones_1.16.5-7.6.4.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "4101892",
+        "domain": "mediafilez",
+        "filename": "tombstone-6.8.7-1.16.5.jar",
+        "depend_on": [],
+        "state": "install"
+    }
+]

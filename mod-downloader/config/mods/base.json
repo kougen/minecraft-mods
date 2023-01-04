@@ -1,0 +1,114 @@
+[
+    {
+        "id": "3798940",
+        "domain": "media",
+        "filename": "AI-Improvements-1.16.5-0.5.0.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3732244",
+        "domain": "mediafilez",
+        "filename": "AttributeFix-1.16.5-10.1.4.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3972422",
+        "domain": "mediafilez",
+        "filename": "cloth-config-4.16.91-forge.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3658432",
+        "domain": "mediafilez",
+        "filename": "Clumps-6.0.0.28.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3946491",
+        "domain": "mediafilez",
+        "filename": "configured-1.5.3-1.16.5.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "4277433",
+        "domain": "mediafilez",
+        "filename": "CraftTweaker-1.16.5-7.1.2.516.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3531342",
+        "domain": "mediafilez",
+        "filename": "FastFurnace-1.16.5-4.5.0.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "4030016",
+        "domain": "mediafilez",
+        "filename": "FastWorkbench-1.16.5-4.6.2.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "4074330",
+        "domain": "mediafilez",
+        "filename": "ferritecore-2.1.1-forge.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3909053",
+        "domain": "mediafilez",
+        "filename": "incontrol-1.16-5.2.12.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "4060770",
+        "domain": "mediafilez",
+        "filename": "jei-1.16.5-7.7.1.153.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3584024",
+        "domain": "mediafilez",
+        "filename": "JEITweaker-1.16.5-1.1.0.49.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3435305",
+        "domain": "mediafilez",
+        "filename": "JustEnoughResources-1.16.5-0.12.1.128.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3098229",
+        "domain": "mediafilez",
+        "filename": "NetherPortalFix_1.16.3-7.2.1.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3767277",
+        "domain": "mediafilez",
+        "filename": "spark-1.9.1-forge.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3609611",
+        "domain": "mediafilez",
+        "filename": "whats-that-slot-forge-1.2.2%2B1.16.5.jar",
+        "depend_on": [],
+        "state": "install"
+    }
+]

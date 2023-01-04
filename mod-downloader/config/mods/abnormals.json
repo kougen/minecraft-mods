@@ -1,0 +1,107 @@
+[
+    {
+        "id": "3607198",
+        "domain": "mediafilez",
+        "filename": "abnormals_core-1.16.5-3.3.1.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3520927",
+        "domain": "mediafilez",
+        "filename": "allurement-1.16.5-1.2.1.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3553332",
+        "domain": "mediafilez",
+        "filename": "atmospheric-1.16.5-3.1.1.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3553317",
+        "domain": "mediafilez",
+        "filename": "autumnity-1.16.5-2.1.2.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3549078",
+        "domain": "mediafilez",
+        "filename": "bamboo_blocks-1.16.5-3.0.1.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3549057",
+        "domain": "mediafilez",
+        "filename": "berry_good-1.16.5-4.1.2.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3561118",
+        "domain": "mediafilez",
+        "filename": "buzzier_bees-1.16.5-3.0.3.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3750371",
+        "domain": "mediafilez",
+        "filename": "endergetic-1.16.5-3.0.2.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3561534",
+        "domain": "mediafilez",
+        "filename": "environmental-1.16.5-1.1.1.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3549093",
+        "domain": "mediafilez",
+        "filename": "extraboats-1.16.5-2.1.1.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3567243",
+        "domain": "mediafilez",
+        "filename": "neapolitan-1.16.5-2.2.1.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3549549",
+        "domain": "mediafilez",
+        "filename": "personality-1.16.5-1.0.3.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3560051",
+        "domain": "mediafilez",
+        "filename": "savageandravage-1.16.5-3.2.0.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3561148",
+        "domain": "mediafilez",
+        "filename": "upgrade_aquatic-1.16.5-3.1.2.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3549585",
+        "domain": "mediafilez",
+        "filename": "abnormals_delight-1.16.5-1.2.1.jar",
+        "depend_on": [],
+        "state": "install"
+    }
+]

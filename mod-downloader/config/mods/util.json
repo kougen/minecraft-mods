@@ -1,0 +1,16 @@
+[
+    {
+        "id": "3376819",
+        "domain": "mediafilez",
+        "filename": "item-filters-forge-1605.2.5-build.9.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3574974",
+        "domain": "mediafilez",
+        "filename": "dynamiclightsreforged-mc1.16.5_v1.0.1.jar",
+        "depend_on": [],
+        "state": "download"
+    }
+]

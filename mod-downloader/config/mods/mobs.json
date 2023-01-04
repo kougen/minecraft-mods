@@ -1,0 +1,23 @@
+[
+    {
+        "id": "3467280",
+        "domain": "mediafilez",
+        "filename": "alexsmobs-1.12.1.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3910295",
+        "domain": "mediafilez",
+        "filename": "forestcraft-1.87.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "4120133",
+        "domain": "mediafilez",
+        "filename": "mowziesmobs-1.5.27.jar",
+        "depend_on": [],
+        "state": "install"
+    }
+]
