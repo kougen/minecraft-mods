@@ -2,3 +2,6 @@
 *.pyc
 *.loc
 .idea/
+build/
+dist/
+*.spec

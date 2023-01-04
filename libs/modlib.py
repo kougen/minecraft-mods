@@ -2,6 +2,7 @@ import os
 import shutil
 import requests
 from multipledispatch import dispatch
+from sys import exit
 
 mod_conf = 'config/mods.conf.loc'
 

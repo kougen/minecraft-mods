@@ -6,6 +6,11 @@ from pick import pick
 from libs.modlib import *
 
 r = requests.get("https://raw.githubusercontent.com/joshika39/minecraft-mods/main/config/mods.conf", allow_redirects=True)
+if os.path.exists(mod_conf):
+    os.remove(mod_conf)
+if not os.path.exists('config'):
+    os.mkdir('config')
+    os.mkdir('mods')
 open(mod_conf, 'wb').write(r.content)
 
 
