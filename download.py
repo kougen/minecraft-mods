@@ -31,14 +31,14 @@ else:
     exit("Unknown platform")
 
 
-def update_local_files():
-    mods = read_mods('mods')
+def update_local_files(is_local_conf: bool):
+    mods = read_mods('mods', is_local_conf)
     folders = os.listdir('mods')
     for folder in folders:
         sub_path = os.path.join('mods', folder)
 
         old_mods = get_old_mod_list(sub_path)
-        new_mods = get_new_mod_list(read_mods('mods', folder))
+        new_mods = get_new_mod_list(read_mods('mods', folder, is_local_conf))
         
         for mod in old_mods - new_mods:
             print(f'Removing from {sub_path}: {mod}')
@@ -56,12 +56,12 @@ def delete_files(path: str, ext: str):
 target_path = os.path.join(target_path, ".minecraft", "mods")
 
 if args.localmods:
-    update_local_files()
+    update_local_files(True)
     exit(0)
 
 if args.server:
     target_path = ""
-    update_local_files()
+    update_local_files(False)
     mods = []
     while not os.path.exists(target_path):
         target_path = input('Enter the server mod folder path: ')
@@ -76,7 +76,7 @@ if args.server:
     exit(0)
 
 if args.client:
-    update_local_files()
+    update_local_files(False)
     mods = []
     if os.path.exists('mods'):
         for folder in os.listdir('mods'):

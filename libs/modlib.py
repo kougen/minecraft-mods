@@ -5,6 +5,7 @@ from multipledispatch import dispatch
 from sys import exit
 
 mod_conf = 'config/mods.conf.loc'
+mod_conf_local = 'config/mods.conf'
 
 def create(data: str) -> tuple[str, str, str]:
     mod_dir, domain, mod_data = data.split(' ')[0], data.split(' ')[1], data.split(' ')[2]
@@ -49,7 +50,7 @@ class Mod:
 
         if not os.path.exists(full_path):
             try:
-                print(f'Downloading: {self.name}')
+                print(f'Downloading: {self.link}')
                 r = requests.get(self.link, allow_redirects=True)
                 open(full_path, 'wb').write(r.content)
                 return True
@@ -59,10 +60,13 @@ class Mod:
                 return False
 
 
-@dispatch(str)
-def read_mods(path: str) -> list[Mod]:
+@dispatch(str, bool)
+def read_mods(path: str, is_local_conf: bool) -> list[Mod]:
     mod_list = []
-    with open(mod_conf, 'r') as mds:
+    file = mod_conf
+    if is_local_conf:
+        file = mod_conf_local
+    with open(file, 'r') as mds:
         for m in mds:
             m = m.strip()
             if m != '' and m[0] != "#":
@@ -70,10 +74,13 @@ def read_mods(path: str) -> list[Mod]:
     return mod_list
 
 
-@dispatch(str, str)
-def read_mods(path: str, lib: str) -> list[Mod]:
+@dispatch(str, str, bool)
+def read_mods(path: str, lib: str, is_local_conf: bool) -> list[Mod]:
     mod_list = []
-    with open(mod_conf, 'r') as mds:
+    file = mod_conf
+    if is_local_conf:
+        file = mod_conf_local
+    with open(file, 'r') as mds:
         for m in mds:
             m = m.strip()
             if m != '' and m[0] != "#":
