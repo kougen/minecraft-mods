@@ -227,116 +227,121 @@ def installed_mods_list() -> list[str]:
 
 
 class ModManager:
-    mod_list = []  # type: List[Mod]
-    mod_categories = []
-    mod_packs = []  # type: List[ModPack]
+	mod_list = []  # type: List[Mod]
+	mod_categories = []
+	mod_packs = []  # type: List[ModPack]
 
-    def __init__(self, is_local=False):
-        if len(self.mod_list) > 0:
-            raise Exception
-        init(is_local)
-        for file in os.listdir(json_dir):
-            if file.endswith('.json'):
-                file_path = os.path.join(json_dir, file)
-                json_data = open(file_path, 'r').read()
-                mods_data = json.loads(json_data)
-                for mod_data in mods_data:
-                    category = file.replace('.json', '')
-                    mod = Mod.load_from_json(mod_data, category)
-                    if mod:
-                        self.mod_list.append(mod)
-                        if not os.path.exists(mod.local_path) and mod.state != "inactive":
-                            mod.download()
-                        if category not in self.mod_categories:
-                            self.mod_categories.append(category)
+	def __init__(self, is_local=False):
+		if len(self.mod_list) > 0:
+			raise Exception
+		init(is_local)
+		for file in os.listdir(json_dir):
+			if file.endswith('.json'):
+				file_path = os.path.join(json_dir, file)
+				json_data = open(file_path, 'r').read()
+				mods_data = json.loads(json_data)
+				for mod_data in mods_data:
+					category = file.replace('.json', '')
+					mod = Mod.load_from_json(mod_data, category)
+					if mod:
+						self.mod_list.append(mod)
+						if not os.path.exists(mod.local_path) and mod.state != "inactive":
+							mod.download()
+						if category not in self.mod_categories:
+							self.mod_categories.append(category)
 
-        for mod_obj in self.mod_list:
-            temp = []
-            for mod_str in mod_obj.depend_on_str:
-                temp.append(self.get_mod_by_id(mod_str))
-            mod_obj.depend_on = temp
-        self.mod_packs = self.get_mod_packs()
+		for mod_obj in self.mod_list:
+			temp = []
+			for mod_str in mod_obj.depend_on_str:
+				temp.append(self.get_mod_by_id(mod_str))
+			mod_obj.depend_on = temp
+		self.mod_packs = self.get_mod_packs()
 
-    def print(self):
-        for mod in self.mod_list:
-            print(mod)
+	def __del__(self):
+		self.mod_list.clear()
+		self.mod_packs.clear()
+		self.mod_categories.clear()
 
-    def packs_to_json(self):
-        data = []
-        for pack in self.mod_packs:
-            data.append(pack.serializable_attrs())
-        json_obj = json.dumps(data, indent=4)
-        with open(dev_pack_path, "w") as outfile:
-            outfile.write(json_obj)
+	def print(self):
+		for mod in self.mod_list:
+			print(mod)
 
-    def mod_to_json(self):
-        for category in self.mod_categories:
-            target = os.path.join(curr_dir(), 'config', 'mods', f'{category}.json')
-            data = []
-            for mod in self.mod_list:
-                if mod.category == category:
-                    data.append(mod.serializable_attrs())
+	def packs_to_json(self):
+		data = []
+		for pack in self.mod_packs:
+			data.append(pack.serializable_attrs())
+		json_obj = json.dumps(data, indent=4)
+		with open(dev_pack_path, "w") as outfile:
+			outfile.write(json_obj)
 
-            json_object = json.dumps(data, indent=4)
+	def mod_to_json(self):
+		for category in self.mod_categories:
+			target = os.path.join(curr_dir(), 'config', 'mods', f'{category}.json')
+			data = []
+			for mod in self.mod_list:
+				if mod.category == category:
+					data.append(mod.serializable_attrs())
 
-            with open(target, "w") as outfile:
-                outfile.write(json_object)
-            print(f'{category} category done')
+			json_object = json.dumps(data, indent=4)
 
-    def search(self, search_string: str) -> list[Mod]:
-        results = []
-        for mod in self.mod_list:
-            if mod.state != "inactive" and (search_string in mod.name
-                                            or search_string in mod.category
-                                            or search_string in mod.link
-                                            or search_string in mod.filename):
-                results.append(mod)
-        return results
+			with open(target, "w") as outfile:
+				outfile.write(json_object)
+			print(f'{category} category done')
 
-    def get_mod_packs(self) -> list[ModPack]:
-        mod_packs = []  # type: list[ModPack]
-        if os.path.exists(pack_path):
-            json_data = open(pack_path, 'r').read()
-            packs = json.loads(json_data)
-            for pack_data in packs:
-                temp_mods = []  # type: list[Mod]
-                for mod_id in pack_data['pack_content']:
-                    if self.get_mod_by_id(mod_id) is not None:
-                        temp_mods.append(self.get_mod_by_id(mod_id))
-                mod_packs.append(ModPack.load_from_json(pack_data, temp_mods))
-            return mod_packs
+	def search(self, search_string: str) -> list[Mod]:
+		results = []
+		for mod in self.mod_list:
+			if mod.state != "inactive" and (search_string in mod.name
+											or search_string in mod.category
+											or search_string in mod.link
+											or search_string in mod.filename):
+				results.append(mod)
+		return results
 
-    def select_mod_packs(self) -> tuple[ModPack, int]:
-        if self.mod_packs is not None:
-            chosen = pick(self.mod_packs, "Select a mod pack:")  # type: tuple[ModPack, int]
-            return chosen
+	def get_mod_packs(self) -> list[ModPack]:
+		mod_packs = []  # type: list[ModPack]
+		if os.path.exists(pack_path):
+			json_data = open(pack_path, 'r').read()
+			packs = json.loads(json_data)
+			for pack_data in packs:
+				temp_mods = []  # type: list[Mod]
+				for mod_id in pack_data['pack_content']:
+					if self.get_mod_by_id(mod_id) is not None:
+						temp_mods.append(self.get_mod_by_id(mod_id))
+				mod_packs.append(ModPack.load_from_json(pack_data, temp_mods))
+			return mod_packs
 
-    def get_pack_content_by_name(self, name):
-        for pack in self.mod_packs:
-            if pack == name:
-                return pack
+	def select_mod_packs(self) -> tuple[ModPack, int]:
+		if self.mod_packs is not None:
+			chosen = pick(self.mod_packs, "Select a mod pack:")  # type: tuple[ModPack, int]
+			return chosen
 
-    def get_mods_by_category(self, category: str) -> list[Mod]:
-        mod_list = []
-        for mod in self.mod_list:
-            if mod.state == "install" and mod.category == category:
-                mod_list.append(mod)
-        return mod_list
+	def get_pack_content_by_name(self, name):
+		for pack in self.mod_packs:
+			if pack == name:
+				return pack
 
-    def get_mod_by_name(self, name: str) -> Mod:
-        for mod in self.mod_list:
-            if mod.name == name:
-                return mod
+	def get_mods_by_category(self, category: str) -> list[Mod]:
+		mod_list = []
+		for mod in self.mod_list:
+			if mod.state == "install" and mod.category == category:
+				mod_list.append(mod)
+		return mod_list
 
-    def get_mod_by_filename(self, filename: str) -> Mod:
-        for mod in self.mod_list:
-            if mod.filename == filename:
-                return mod
+	def get_mod_by_name(self, name: str) -> Mod:
+		for mod in self.mod_list:
+			if mod.name == name:
+				return mod
 
-    def get_mod_by_id(self, id: str) -> Mod:
-        for mod in self.mod_list:
-            if mod.mod_id == id:
-                return mod
+	def get_mod_by_filename(self, filename: str) -> Mod:
+		for mod in self.mod_list:
+			if mod.filename == filename:
+				return mod
 
-    def mod_id_list_to_mod(self, ids: list[str]) -> List[Mod]:
-        return [self.get_mod_by_id(_mod_id) for _mod_id in ids]
+	def get_mod_by_id(self, id: str) -> Mod:
+		for mod in self.mod_list:
+			if mod.mod_id == id:
+				return mod
+
+	def mod_id_list_to_mod(self, ids: list[str]) -> List[Mod]:
+		return [self.get_mod_by_id(_mod_id) for _mod_id in ids]
