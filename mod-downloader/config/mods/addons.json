@@ -1,0 +1,93 @@
+[
+	{
+		"id": "3936649",
+		"domain": "mediafilez",
+		"filename": "Apotheosis-1.16.5-4.8.9A0.jar",
+		"depend_on": [],
+		"state": "download"
+	},
+	{
+		"id": "3346467",
+		"domain": "mediafilez",
+		"filename": "cfm-7.0.0pre22-1.16.3.jar",
+		"depend_on": [],
+		"state": "download"
+	},
+	{
+		"id": "3166283",
+		"domain": "mediafilez",
+		"filename": "decorative_blocks-1.16.4-1.7.2.jar",
+		"depend_on": [],
+		"state": "download"
+	},
+	{
+		"id": "4085235",
+		"domain": "mediafilez",
+		"filename": "DynamicTrees-1.16.5-0.10.2.jar",
+		"depend_on": [],
+		"state": "download"
+	},
+	{
+		"id": "3216206",
+		"domain": "mediafilez",
+		"filename": "fairylights-4.0.5-1.16.5.jar",
+		"depend_on": [],
+		"state": "download"
+	},
+	{
+		"id": "3446262",
+		"domain": "mediafilez",
+		"filename": "industrial-foregoing-1.16.5-3.2.14.6-14.jar",
+		"depend_on": [],
+		"state": "download"
+	},
+	{
+		"id": "3562127",
+		"domain": "mediafilez",
+		"filename": "MysticalAgriculture-1.16.5-4.2.6.jar",
+		"depend_on": [],
+		"state": "download"
+	},
+	{
+		"id": "3131044",
+		"domain": "mediafilez",
+		"filename": "paintings-1.16.4-7.0.0.1.jar",
+		"depend_on": [],
+		"state": "download"
+	},
+	{
+		"id": "3642325",
+		"domain": "mediafilez",
+		"filename": "Quark-r2.4-322.jar",
+		"depend_on": [],
+		"state": "download"
+	},
+	{
+		"id": "3088871",
+		"domain": "mediafilez",
+		"filename": "QuarkOddities-1.16.3.jar",
+		"depend_on": [],
+		"state": "download"
+	},
+	{
+		"id": "4167327",
+		"domain": "mediafilez",
+		"filename": "sophisticatedbackpacks-1.16.5-3.15.20.755.jar",
+		"depend_on": [],
+		"state": "download"
+	},
+	{
+		"id": "3776277",
+		"domain": "mediafilez",
+		"filename": "StorageDrawers-1.16.3-8.5.2.jar",
+		"depend_on": [],
+		"state": "download"
+	},
+	{
+		"id": "3874384",
+		"domain": "mediafilez",
+		"filename": "supplementaries-1.16.5-0.18.4b.jar",
+		"depend_on": [],
+		"state": "download"
+	}
+]

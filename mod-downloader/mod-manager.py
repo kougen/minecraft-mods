@@ -1,5 +1,5 @@
 from pick import pick
-from mod import Mod, ModPack, ModManager
+from mod import Mod, ModPack, ModManager, pack_mods, unpack_mods
 
 
 def confirm(message: str) -> int:
@@ -61,6 +61,10 @@ if i == 1:
 		for mod in selected_mods:
 			mod.depend_on = mods.mod_id_list_to_mod(dependency_list)
 		mods.mod_to_json()
+elif i == 2:
+	pack_mods()
+elif i ==3:
+	unpack_mods()
 elif i == 4:
 	operation, i = pick(['Create', 'Edit', 'Remove'], 'Choose an operation: ', indicator='=>', default_index=0)
 	if i == 0:
