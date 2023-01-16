@@ -20,18 +20,29 @@ mods = ModManager(True)
 
 
 class MenuItem():
-    def __init__(self, content, callback: Callable = None, submenu: 'Menu' = None):
+    def __init__(self, content, callback: Callable = None):
         self.content = content
         self.callback = callback
-        self.submenu = submenu
 
     def __str__(self):
         return self.content
 
+    def _exit():
+        exit(0)
 
-class Menu():
+    @classmethod
+    def exit(cls):
+        return cls("Exit", callback=cls._exit)
+
+    @classmethod
+    def back(cls):
+        return cls("Back")
+
+
+class Menu:
     def __init__(self, options: list[MenuItem], title="Menu:"):
         self.options = options
+        self.options.append(MenuItem.exit())
         self.title = title
 
     def pick(self) -> tuple[MenuItem, int]:
@@ -41,9 +52,21 @@ class Menu():
         selected, i = self.pick()
         if selected.callback is not None:
             selected.callback()
-        if selected.submenu is not None:
-            selected.submenu.show()
+        return selected.content
+    
 
+
+class SubMenu(Menu):
+    def __init__(self, options: list[MenuItem], title="Menu:"):
+        self.options.append(MenuItem.back())
+        super().__init__(options, title)
+    
+    def show(self, parent: Menu):
+        selected, i = self.pick()
+        if selected.callback is not None:
+            selected.callback()
+        if selected.content == "Back":
+            parent.show()
 
 def select_one_mod():
     result_count = 0
@@ -95,7 +118,7 @@ def create_pack():
     mods.packs_to_json()
 
 
-pack_content_menu = Menu(
+pack_content_menu = SubMenu(
     [
         MenuItem("Add", add_mods_to_pack),
         MenuItem("Edit", edit_mods_in_pack),
@@ -104,12 +127,12 @@ pack_content_menu = Menu(
 )
 
 
-pack_detail_menu = Menu(
+pack_detail_menu = SubMenu(
     [
         MenuItem("Name"),
         MenuItem("Display Name"),
         MenuItem("Description"),
-        MenuItem("Content", submenu=pack_content_menu),
+        MenuItem("Content"),
     ], 'What do you want to modify?'
 )
 
@@ -117,7 +140,7 @@ pack_detail_menu = Menu(
 pack_menu = Menu(
     [
         MenuItem('Create Pack', create_pack),
-        MenuItem('Edit Pack', submenu=pack_detail_menu),
+        MenuItem('Edit Pack', pack_detail_menu.show(pack_menu)),
         MenuItem('Remove Pack'),
     ], "Select a pack operation"
 )
