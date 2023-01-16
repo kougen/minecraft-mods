@@ -31,10 +31,13 @@ def copy_to_target(manager: ModManager, pack_mods: list[Mod], path: str):
 
     for mod_file in os.listdir(path):
         result = manager.get_mod_by_filename(mod_file)
-        mod_path = os.path.join(path, mod_file)
-        if result.filename not in installed_mods_list() or result not in pack_mods or result.state != "install":
+        if result is not None:
+            mod_path = os.path.join(path, mod_file)
+            if result.filename not in installed_mods_list() or result not in pack_mods or result.state != "install":
+                print(f"Removing: {mod_path}")
+                os.remove(mod_path)
+        else:
             print(f"Removing: {mod_path}")
-            os.remove(mod_path)
 
     for pack_mod in pack_mods:
         pack_mod.copy2(path)
