@@ -28,7 +28,6 @@ def refresh_mods(mods: ModManager, path: str):
 
 
 def copy_to_target(manager: ModManager, pack_mods: list[Mod], path: str):
-
     for mod_file in os.listdir(path):
         result = manager.get_mod_by_filename(mod_file)
         if result is not None:
