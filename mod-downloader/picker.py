@@ -1,8 +1,9 @@
 import os
-from termcolor import colored
+import colored
+from colored import stylize
 from getch import getch, pause
 import curses
-from mod import ModManager
+from mod import ModManager, ModPack, Mod
 
 KEYS_ENTER = (curses.KEY_ENTER, b"\n", b"\r")
 KEYS_UP = (curses.KEY_UP,b'H', b'k')
@@ -23,6 +24,7 @@ class Menu:
 		self.selected = selected
 	
 	def show(self):
+		selected_stlye = colored.attr("underlined")
 		move = None
 		page = 0
 		max_page = (len(self.options) / 10) * 10
@@ -36,7 +38,7 @@ class Menu:
 				if index < len(self.options):
 					option = self.options[index]
 					if index == self.selected:
-						print(colored(f'{self.indicator} {option}', "green"))
+						print(stylize(f'{self.indicator} {option}', selected_stlye))
 					else:
 						print(f'{self.indicator_space} {option}')
 			move = getch()
@@ -54,5 +56,5 @@ class Menu:
 mods = ModManager(True)
 
 menu = Menu("Test Menu", mods.mod_list)
-mod = menu.show()
-print(f'Selected item: {mod.filename}')
+pack = menu.show()  # type: Mod
+print(f'Selected item: {pack}')

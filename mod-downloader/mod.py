@@ -7,8 +7,8 @@ from typing import List
 import json
 from zipfile import ZipFile
 from pick import pick
-from termcolor import colored
-
+import colored
+from colored import stylize
 
 zip_url = "https://github.com/joshika39/minecraft-mods/raw/main/data/mods.zip"
 pack_url = "https://raw.githubusercontent.com/joshika39/minecraft-mods/main/mod-downloader/config/packs.json"
@@ -115,7 +115,9 @@ class Mod:
             deps += f'{mod.name} '
         deps = deps[:-1]
         deps = deps[:75] + (deps[75:] and '..')
-        return f"({self.name} {deps})"
+        name_stlye = colored.fg('green') + colored.attr('bold')
+        deps_style = colored.fg('grey_0')
+        return stylize(self.name, name_stlye) + stylize(f" ({deps})", deps_style)
 
     def details(self) -> str:
         return f"Mod: {self.name}\n-> {self.category}\n-> {self.filename}\n-> {self.link}\n" + 10 * '-' + '\n'
@@ -204,8 +206,11 @@ class ModPack:
             contents += f'{mod.name} '
         contents = contents[:-1]
         contents = contents[:75] + (contents[75:] and '..')
-        return f'{self.display_name} ({self.name}) ~ {self.description} | Contents: [{contents}]'
-        # return colored(f'{self.display_name}', ) + f'({self.name}) ~ ' + colored(f'{self.description}', 'green', attrs=['bold']) + f' | Contents: [{contents}]'
+        # return f'{self.display_name} ({self.name}) ~ {self.description} | Contents: [{contents}]'
+        name_stlye = colored.fg('green') + colored.attr('bold')
+        desc_style = colored.fg('green')
+        content_style = colored.fg('grey_0')
+        return stylize(f'{self.display_name}', name_stlye) + f' ({self.name})' + '\n\tDescription:\t' + stylize(f'{self.description}', desc_style) + '\n\tContents:\t' + stylize(f'[{contents}]', content_style)
 
     def serializable_attrs(self):
         props = {'name': self.name, 'display_name': self.display_name, 'description': self.description,
