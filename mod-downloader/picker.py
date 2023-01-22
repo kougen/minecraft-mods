@@ -43,9 +43,17 @@ class Menu:
 	def show(self, parent=''):
 		pass
 
+class FunctionItem:
+	def __init__(self, title: str, callable):
+		self.title = title
+		self.callable = callable
+	
+	def __str__(self):
+		return self.title
+
 
 class SingleMenu(Menu):
-	def __init__(self, title: str, options: list, callback, indicator='->', selected=0, shown_content=15):
+	def __init__(self, title: str, options: list, callback=None, indicator='->', selected=0, shown_content=15):
 		super().__init__(title, options, callback, indicator, selected, shown_content)
 	
 	def show(self, parent=''):
@@ -69,7 +77,8 @@ class SingleMenu(Menu):
 				return None
 		if self.callback is not None:
 			self.callback(self.options[self.selected])
-		return self.options[self.selected]
+		else:
+			return self.options[self.selected]
 
 
 class MultiMenu(Menu):
@@ -114,7 +123,7 @@ class MultiMenu(Menu):
 
 
 class MenuWrapper(Menu):
-	def __init__(self, title: str, options: list[Menu], indicator='->', selected=0, shown_content=15):
+	def __init__(self, title: str, options: list, indicator='->', selected=0, shown_content=15):
 		super().__init__(title, options, None, indicator, selected, shown_content)
 
 	def show(self, parent=''):
@@ -135,4 +144,10 @@ class MenuWrapper(Menu):
 						print(f'{self.indicator_space} {option}')
 			move = self.action_check()
 			if move in KEYS_ENTER:
-				self.options[self.selected].show(self.title)
+				if type(self.options[self.selected]) == FunctionItem:
+					func = self.options[self.selected]  #type: FunctionItem
+					func.callable()
+					
+				if isinstance(self.options[self.selected], Menu):
+					menu = self.options[self.selected]  #type: Menu
+					menu.show(self.title)

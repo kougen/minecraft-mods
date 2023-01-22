@@ -179,7 +179,6 @@ class Mod:
 
 
 class ModPack:
-
     @classmethod
     def load_from_json(cls, pack_json, pack_content: List[Mod]) -> 'ModPack':
         return cls(pack_json['name'], pack_json['display_name'], pack_json['description'], pack_content)
@@ -190,6 +189,10 @@ class ModPack:
         display_name = input('Enter a display name: ')
         description = input('Enter a description: ')
         return cls(name, display_name, description, [])
+
+    @classmethod
+    def init_pack(cls, existing_pack: 'ModPack') -> 'ModPack':
+        return cls(existing_pack.name, existing_pack.display_name, existing_pack.description, existing_pack.pack_content)
 
     def __init__(self, name: str, display_name: str, description: str, pack_content: List[Mod]):
         self.name = name
@@ -210,6 +213,18 @@ class ModPack:
                  'pack_content': [i.mod_id for i in self.pack_content]}
         return props
 
+    def list_contents(self):
+        print(f"Mod Count: {len(self.pack_content)}")
+        categories = []
+        for mod in self.pack_content:
+            if mod.category not in categories:
+                categories.append(mod.category)
+        
+        for category in categories:
+            print(f"--- {category} ---")
+            for mod in self.pack_content:
+                if mod.category == category:
+                    print(f"{mod}")
 
 def installed_mods_list() -> list[str]:
     mods = []
@@ -313,8 +328,6 @@ class ModManager:
         if self.mod_packs is not None:
             return SingleMenu("Select a modpack:", self.mod_packs, None).show()
 
-            
-
     def get_pack_content_by_name(self, name):
         for pack in self.mod_packs:
             if pack == name:
@@ -344,3 +357,6 @@ class ModManager:
 
     def mod_id_list_to_mod(self, ids: list[str]) -> List[Mod]:
         return [self.get_mod_by_id(_mod_id) for _mod_id in ids]
+
+    def get_mod_filenames(self) -> str:
+        return [mod.filename for mod in self.mod_list]
