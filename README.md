@@ -1,5 +1,12 @@
 # Minecraft Mod Manager (MMM)
 
+## Usage
+
+1. Download the latest release from here: [Latest Release](https://github.com/joshika39/minecraft-mods/releases/latest)
+2. Allow the program to download, it isn't malicious!
+3. Start the program and wait for the mods to download
+4. When the menu showed up, navigate to the preferred modpack and hit enter to download
+
 #### Other useful options
 
 - command to get the ip from the terminal: `cd $HOME\Fork\minecraft-mods\; .\print-ip.ps1`
