@@ -1,10 +1,9 @@
 import os
-import colored
-from colored import stylize
 from getch import getch, pause
 import curses
-from mod import ModManager, ModPack, Mod
-from abc import ABC, abstractmethod
+from abc import abstractmethod
+from colors import *
+
 
 KEYS_ENTER = (curses.KEY_ENTER, b"\n", b"\r")
 KEYS_UP = (curses.KEY_UP,b'H', b'k')
@@ -23,7 +22,6 @@ class Menu:
 		self.selected = selected
 		self.page = 0
 		self.shown_content = shown_content
-		self.selected_stlye = colored.attr("underlined")
 		self.callback = callback
 
 	def __str__(self):
@@ -51,21 +49,27 @@ class SingleMenu(Menu):
 		super().__init__(title, options, callback, indicator, selected, shown_content)
 	
 	def show(self, parent=''):
+		if parent != '':
+			title = f'{parent} -> {self.title}'
+		else:
+			title = self.title
 		move = None
 		while move not in KEYS_ENTER:
 			os.system('cls')
-			print(f'{parent}{self.title}')
+			print(f'{title}')
 			for index in range(self.page * self.shown_content, self.shown_content + self.page * self.shown_content):
 				if index < len(self.options):
 					option = self.options[index]
 					if index == self.selected:
-						print(stylize(f'{self.indicator} {option}', self.selected_stlye))
+						print(colorize(f'{self.indicator} {option}'))
 					else:
-						print(f'{self.indicator_space} {option}')
+						print(colorize(f'{self.indicator_space} {option}'))
 			move = self.action_check()
 			if move in KEYS_ESC:
 				return None
-		self.callback(self.options[self.selected])
+		if self.callback is not None:
+			self.callback(self.options[self.selected])
+		return self.options[self.selected]
 
 
 class MultiMenu(Menu):
@@ -76,24 +80,28 @@ class MultiMenu(Menu):
 		self.selected_in = f'{select_open}{select_mark}{select_close}'
 		
 	def show(self, parent=''):
+		if parent != '':
+			title = f'{parent} -> {self.title}'
+		else:
+			title = self.title
 		move = None
 		selection = []
 		while move not in KEYS_ENTER:
 			os.system('cls')
-			print(f'{parent}{self.title}')
+			print(f'{title}')
 			for index in range(self.page * self.shown_content, self.shown_content + self.page * self.shown_content):
 				if index < len(self.options):
 					option = self.options[index]
 					if index == self.selected:
 						if option in selection:
-							print(stylize(f'{self.indicator} {self.selected_in} {option}', self.selected_stlye))
+							print(colorize(f'{self.indicator} {self.selected_in} {option}'))
 						else:
-							print(stylize(f'{self.indicator} {self.unselected} {option}', self.selected_stlye))
+							print(colorize(f'{self.indicator} {self.unselected} {option}'))
 					else:
 						if option in selection:
-							print(f'{self.indicator_space} {self.selected_in} {option}')
+							print(colorize(f'{self.indicator_space} {self.selected_in} {option}'))
 						else:
-							print(f'{self.indicator_space} {self.unselected} {option}')
+							print(colorize(f'{self.indicator_space} {self.unselected} {option}'))
 			move = self.action_check()
 			if move in KEYS_SELECT:
 				if self.options[self.selected] in selection:
@@ -110,30 +118,21 @@ class MenuWrapper(Menu):
 		super().__init__(title, options, None, indicator, selected, shown_content)
 
 	def show(self, parent=''):
+		if parent != '':
+			title = f'{parent} -> {self.title}'
+		else:
+			title = self.title
 		move = KEYS_ENTER[1]  # type: bytes
 		while move not in KEYS_ESC:
 			os.system('cls')
-			print(f'{parent}{self.title}')
+			print(f'{title}')
 			for index in range(self.page * self.shown_content, self.shown_content + self.page * self.shown_content):
 				if index < len(self.options):
 					option = self.options[index]
 					if index == self.selected:
-						print(stylize(f'{self.indicator} {option}', self.selected_stlye))
+						print(colorize(f'{self.indicator} {option}'))
 					else:
 						print(f'{self.indicator_space} {option}')
 			move = self.action_check()
 			if move in KEYS_ENTER:
-				self.options[self.selected].show(f'{self.title} -> ')
-
-mods = ModManager(True)
-
-def print_results(results):
-	print(results)
-	exit(0)
-
-menu1 = SingleMenu("Menu 1", ["Opt 1", "Opt 2", "Opt 3"], print_results)
-menu2 = SingleMenu("Menu 2", ["2Opt 1", "2Opt 2", "2Opt 3"], print_results)
-menu3 = MultiMenu("Mod Selection", mods.mod_list, print_results, shown_content=20)
-
-main_menu = MenuWrapper("Main Menu", [menu1, menu2, menu3])
-main_menu.show()
+				self.options[self.selected].show(self.title)
