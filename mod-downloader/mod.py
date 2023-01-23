@@ -101,6 +101,22 @@ def link_id(mod_id: str) -> str:
     return result
 
 
+def installed_mods_list() -> list[str]:
+    mods = []
+    if os.path.exists(mod_file_dir):
+        for folder in os.listdir(mod_file_dir):
+            folder_path = os.path.join(mod_file_dir, folder)
+            if os.path.isdir(folder_path):
+                for file in os.listdir(folder_path):
+                    file_path = os.path.join(folder_path, file)
+                    if os.path.exists(file_path) and file.endswith('.jar'):
+                        mods.append(file)
+    return mods
+
+
+def mod_list_to_filenames(mod_list: list['Mod']):
+    return [mod.filename for mod in mod_list]
+
 class Mod:
     depend_on = []  # type: list['Mod']
 
@@ -213,36 +229,28 @@ class ModPack:
                  'pack_content': [i.mod_id for i in self.pack_content]}
         return props
 
-    def list_contents(self):
-        print(f"Mod Count: {len(self.pack_content)}")
-        categories = []
+    def list_contents(self, types=['inactive', 'download', 'install']) -> list[Mod]:
+        mods = [] #type: list[Mod]
         for mod in self.pack_content:
-            if mod.category not in categories:
-                categories.append(mod.category)
-        
+            if mod.state in types:
+                mods.append(mod)
+        return mods
+
+    def list_contents_ordered(self, categories: list[str], types=['inactive', 'download', 'install']) -> tuple[int, dict[str, list[Mod]]]:
+        count = 0
+        oredered = {} 
         for category in categories:
-            print(f"--- {category} ---")
+            mod_category_content = []
             for mod in self.pack_content:
-                if mod.category == category:
-                    print(f"{mod}")
-
-def installed_mods_list() -> list[str]:
-    mods = []
-    if os.path.exists(mod_file_dir):
-        for folder in os.listdir(mod_file_dir):
-            folder_path = os.path.join(mod_file_dir, folder)
-            if os.path.isdir(folder_path):
-                for file in os.listdir(folder_path):
-                    file_path = os.path.join(folder_path, file)
-                    if os.path.exists(file_path) and file.endswith('.jar'):
-                        mods.append(file)
-    return mods
-
-
+                if mod.state in types and mod.category == category:
+                    mod_category_content.append(mod)
+                    count += 1
+            oredered[category] = mod_category_content
+        return count, oredered
+                
 class ModManager:
     mod_list = []  # type: List[Mod]
     mod_categories = []
-    mod_packs = []  # type: List[ModPack]
 
     def __init__(self, is_local=False):
         if len(self.mod_list) > 0:
@@ -268,24 +276,14 @@ class ModManager:
             for mod_str in mod_obj.depend_on_str:
                 temp.append(self.get_mod_by_id(mod_str))
             mod_obj.depend_on = temp
-        self.mod_packs = self.get_mod_packs()
 
     def __del__(self):
         self.mod_list.clear()
-        self.mod_packs.clear()
         self.mod_categories.clear()
 
     def print(self):
         for mod in self.mod_list:
             print(mod)
-
-    def packs_to_json(self):
-        data = []
-        for pack in self.mod_packs:
-            data.append(pack.serializable_attrs())
-        json_obj = json.dumps(data, indent=4)
-        with open(dev_pack_path, "w") as outfile:
-            outfile.write(json_obj)
 
     def mod_to_json(self):
         for category in self.mod_categories:
@@ -310,28 +308,6 @@ class ModManager:
                                             or search_string in mod.filename):
                 results.append(mod)
         return results
-
-    def get_mod_packs(self) -> list[ModPack]:
-        mod_packs = []  # type: list[ModPack]
-        if os.path.exists(pack_path):
-            json_data = open(pack_path, 'r').read()
-            packs = json.loads(json_data)
-            for pack_data in packs:
-                temp_mods = []  # type: list[Mod]
-                for mod_id in pack_data['pack_content']:
-                    if self.get_mod_by_id(mod_id) is not None:
-                        temp_mods.append(self.get_mod_by_id(mod_id))
-                mod_packs.append(ModPack.load_from_json(pack_data, temp_mods))
-            return mod_packs
-
-    def select_mod_packs(self) -> ModPack:
-        if self.mod_packs is not None:
-            return SingleMenu("Select a modpack:", self.mod_packs, None).show()
-
-    def get_pack_content_by_name(self, name):
-        for pack in self.mod_packs:
-            if pack == name:
-                return pack
 
     def get_mods_by_category(self, category: str) -> list[Mod]:
         mod_list = []
@@ -358,5 +334,40 @@ class ModManager:
     def mod_id_list_to_mod(self, ids: list[str]) -> List[Mod]:
         return [self.get_mod_by_id(_mod_id) for _mod_id in ids]
 
-    def get_mod_filenames(self) -> str:
-        return [mod.filename for mod in self.mod_list]
+
+class PackManager:
+    mod_packs = []  # type: List[ModPack]
+
+    def __init__(self, mod_manager: ModManager, is_local=False):
+        if len(self.mod_packs) > 0:
+            raise Exception
+        init(is_local)
+        if os.path.exists(pack_path):
+            json_data = open(pack_path, 'r').read()
+            packs = json.loads(json_data)
+            for pack_data in packs:
+                temp_mods = []  # type: list[Mod]
+                for mod_id in pack_data['pack_content']:
+                    if mod_manager.get_mod_by_id(mod_id) is not None:
+                        temp_mods.append(mod_manager.get_mod_by_id(mod_id))
+                self.mod_packs.append(ModPack.load_from_json(pack_data, temp_mods))
+    
+    def __del__(self):
+        self.mod_packs.clear()
+
+    def select_mod_packs(self) -> ModPack:
+        if self.mod_packs is not None:
+            return SingleMenu("Select a modpack:", self.mod_packs, None).show()
+
+    def get_pack_content_by_name(self, name):
+        for pack in self.mod_packs:
+            if pack == name:
+                return pack
+    
+    def packs_to_json(self):
+        data = []
+        for pack in self.mod_packs:
+            data.append(pack.serializable_attrs())
+        json_obj = json.dumps(data, indent=4)
+        with open(dev_pack_path, "w") as outfile:
+            outfile.write(json_obj)

@@ -1,17 +1,18 @@
-from mod import Mod, ModPack, ModManager, pack_mods, unpack_mods
+from mod import Mod, ModPack, ModManager, PackManager, pack_mods, unpack_mods
 from picker import SingleMenu, MenuWrapper, MultiMenu, FunctionItem
 import os
 
 DEFAULT_IMPORT_PATH = 'modimport.txt'
 MOD_SEPARATOR = ';'
 
-manager = ModManager(True)
+mod_manager = ModManager(True)
+pack_manager = PackManager(mod_manager, True)
 
 def select_one_mod():
     result_count = 0
     while result_count != 1:
         mod_name = input("Mod name: ")
-        mod_res = manager.search(mod_name)
+        mod_res = mod_manager.search(mod_name)
         result_count = len(mod_res)
         if result_count > 1:
             print("Please narrow your seach:")
@@ -22,8 +23,8 @@ def select_one_mod():
 
 def remove_selected_mods(selected_mods):
     for mod in selected_mods:
-        if mod in manager.mod_list:
-            manager.mod_list.remove(mod)
+        if mod in mod_manager.mod_list:
+            mod_manager.mod_list.remove(mod)
 
 def add_single_mod():
     mod_id = input("Enter mod id: ")
@@ -41,16 +42,22 @@ def add_multiple_mod():
         line = lines[i]
         data = line.split(MOD_SEPARATOR)
         mod = Mod(data[0], category, data[1], data[3], [], data[2])
-        if mod not in manager.get_mod_filenames():
-            manager.mod_list.append(mod)
+        if mod not in mod_manager.get_mod_filenames():
+            mod_manager.mod_list.append(mod)
 
 def list_contents(selected):
+    os.system('cls')
     pack = ModPack.init_pack(selected)
-    pack.list_contents()
+    mod_count, category_dict = pack.list_contents_ordered(mod_manager.mod_categories, ['install'])
+    print(f"Mod count in the pack: {mod_count}")
+    for category in category_dict:
+        print(f'---{category.upper()}---')
+        for mod in category_dict[category]:
+            print(f'{mod}')
     input('Press any key to continue...')
 
 pack_menu = MenuWrapper("Select pack Operation", [
-    SingleMenu("List Pack Content", manager.mod_packs, list_contents)
+    SingleMenu("List Pack Content", pack_manager.mod_packs, list_contents)
 ])
 
 main_menu = MenuWrapper(
@@ -59,4 +66,5 @@ main_menu = MenuWrapper(
         FunctionItem("Add Multiple Mod", add_multiple_mod),
         pack_menu
 ])
+
 main_menu.show()
