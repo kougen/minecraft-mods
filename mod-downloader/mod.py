@@ -129,8 +129,8 @@ class Mod:
         for mod in self.depend_on:
             deps += f'{mod.name} '
         deps = deps[:-1]
-        deps = deps[:75] + (deps[75:] and '..')
-        return colorize(f"{self.name} {YELLOW}({deps})", GREEN)
+        deps = deps[:100] + (deps[100:] and '..')
+        return colorize(f"{self.name}{GRAY} - ({self.state}) - {YELLOW}({deps})", GREEN)
 
     def details(self) -> str:
         return f"Mod: {self.name}\n-> {self.category}\n-> {self.filename}\n-> {self.link}\n" + 10 * '-' + '\n'
@@ -221,7 +221,7 @@ class ModPack:
         for mod in self.pack_content:
             contents += f'{mod.name} '
         contents = contents[:-1]
-        contents = contents[:75] + (contents[75:] and '..')
+        contents = contents[:100] + (contents[100:] and '..')
         return f'{BOLD}{self.display_name}{RESET_ALL} ({self.name})\n\tDescription:\t{GREEN}{self.description}{RESET_COLOR}\n\tContents:\t[{GRAY}{contents}{RESET_COLOR}]'
 
     def serializable_attrs(self):

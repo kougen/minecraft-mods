@@ -1,6 +1,8 @@
 from mod import Mod, ModPack, ModManager, PackManager, pack_mods, unpack_mods
 from picker import SingleMenu, MenuWrapper, MultiMenu, FunctionItem
 import os
+import time
+from baselib import is_downloadable
 
 DEFAULT_IMPORT_PATH = 'modimport.txt'
 MOD_SEPARATOR = ';'
@@ -8,28 +10,35 @@ MOD_SEPARATOR = ';'
 mod_manager = ModManager(True)
 pack_manager = PackManager(mod_manager, True)
 
-def select_one_mod():
-    result_count = 0
-    while result_count != 1:
-        mod_name = input("Mod name: ")
-        mod_res = mod_manager.search(mod_name)
-        result_count = len(mod_res)
-        if result_count > 1:
-            print("Please narrow your seach:")
-            for i in mod_res:
-                print(f"\t{i.name}")
-    return mod_res[0]
-
-
 def remove_selected_mods(selected_mods):
     for mod in selected_mods:
         if mod in mod_manager.mod_list:
             mod_manager.mod_list.remove(mod)
 
+
 def add_single_mod():
     mod_id = input("Enter mod id: ")
-    mod_domain = input("Domain: ")
+    mod_category = input("Mod category: ")
+    mod_domain = input("Domain (default:mediafilez): ")
+    if mod_domain == "":
+        mod_domain = "mediafilez"
     mod_filename = input("Filename: ")
+    mod_state = input("State (default:install): ")
+    if mod_state == "":
+        mod_state = "install"
+    mod_deps = input("Dependencies: ")
+    deps = []
+    deps = mod_deps.split(' ')
+    mod =  Mod(mod_id, mod_category, mod_domain, mod_filename, deps, mod_state)
+    link = mod.link
+    if is_downloadable(link):
+        mod_manager.mod_list.append(mod)
+    else:
+        print("Mod is not downloadable")
+        print(f"Link is: {link}")
+        time.sleep(2)
+    mod_manager.mod_to_json()
+
 
 def add_multiple_mod():
     if not os.path.exists(DEFAULT_IMPORT_PATH):
@@ -45,6 +54,7 @@ def add_multiple_mod():
         if mod not in mod_manager.get_mod_filenames():
             mod_manager.mod_list.append(mod)
 
+
 def list_contents(selected):
     os.system('cls')
     pack = ModPack.init_pack(selected)
@@ -56,15 +66,47 @@ def list_contents(selected):
             print(f'{mod}')
     input('Press any key to continue...')
 
-pack_menu = MenuWrapper("Select pack Operation", [
-    SingleMenu("List Pack Content", pack_manager.mod_packs, list_contents)
-])
+
+def modify_mod_state():
+    valid_states = ['install', 'download', 'inactive']
+    state = SingleMenu("New State:", valid_states).show()
+    if state in valid_states:
+        mods = MultiMenu("Select this mods", mod_manager.mod_list).show()  # type: list[Mod]
+        for mod in mods:
+            mod.state = state
+    mod_manager.mod_to_json()
+
+def add_mod_to_modpack():
+    pack = SingleMenu("Select a modpack", pack_manager.mod_packs).show()  #type: ModPack
+    if pack is not None:
+        available_mods = set(mod_manager.mod_list) - set(pack.pack_content)
+        selection = MultiMenu("Select the mods:", list(available_mods)).show()
+        for mod in selection:
+            pack.pack_content.append(mod)
+        pack_manager.packs_to_json()
+
+def remove_mod_from_modpack():
+    pack = SingleMenu("Select a modpack", pack_manager.mod_packs).show()  #type: ModPack
+    if pack is not None:
+        selection = MultiMenu("Select the mods:", pack.pack_content).show()
+        for mod in selection:
+            pack.pack_content.remove(mod)
+        pack_manager.packs_to_json()
 
 main_menu = MenuWrapper(
     "Select Operation", [
-        FunctionItem("Add Single Mod", add_single_mod),
-        FunctionItem("Add Multiple Mod", add_multiple_mod),
-        pack_menu
+        MenuWrapper("Select mod Operation", [
+            FunctionItem("Add Single Mod", add_single_mod),
+            FunctionItem("Add Multiple Mod", add_multiple_mod),
+            FunctionItem("Modify mod state", modify_mod_state),
+        ]),
+        MenuWrapper("Select pack Operation", [
+            SingleMenu("List Pack Content", pack_manager.mod_packs, list_contents),
+            MenuWrapper("Modify Pack Content", [
+                FunctionItem("Add Mod", add_mod_to_modpack),
+                FunctionItem("Remove Mod", remove_mod_from_modpack),
+            ]),
+        ])
 ])
 
 main_menu.show()
