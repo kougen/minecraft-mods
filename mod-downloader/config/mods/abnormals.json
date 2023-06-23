@@ -7,6 +7,13 @@
         "state": "install"
     },
     {
+        "id": "3549585",
+        "domain": "mediafilez",
+        "filename": "abnormals_delight-1.16.5-1.2.1.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
         "id": "3520927",
         "domain": "mediafilez",
         "filename": "allurement-1.16.5-1.2.1.jar",
@@ -24,7 +31,9 @@
         "id": "3553317",
         "domain": "mediafilez",
         "filename": "autumnity-1.16.5-2.1.2.jar",
-        "depend_on": [],
+        "depend_on": [
+            "3607198"
+        ],
         "state": "install"
     },
     {
@@ -94,13 +103,6 @@
         "id": "3561148",
         "domain": "mediafilez",
         "filename": "upgrade_aquatic-1.16.5-3.1.2.jar",
-        "depend_on": [],
-        "state": "install"
-    },
-    {
-        "id": "3549585",
-        "domain": "mediafilez",
-        "filename": "abnormals_delight-1.16.5-1.2.1.jar",
         "depend_on": [],
         "state": "install"
     }

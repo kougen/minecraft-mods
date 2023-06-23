@@ -49,6 +49,15 @@
         "state": "install"
     },
     {
+        "id": "4025585",
+        "domain": "mediafilez",
+        "filename": "portablemobs-1.1.1-forge-mc1.16.jar",
+        "depend_on": [
+            "3863127"
+        ],
+        "state": "install"
+    },
+    {
         "id": "3420107",
         "domain": "mediafilez",
         "filename": "SoL-Carrot-1.16.5-1.10.1.jar",
@@ -59,7 +68,9 @@
         "id": "3552849",
         "domain": "mediafilez",
         "filename": "VisualWorkbench-v1.1.0-1.16.5.jar",
-        "depend_on": [],
+        "depend_on": [
+            "3517499"
+        ],
         "state": "install"
     },
     {

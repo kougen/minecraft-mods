@@ -45,14 +45,18 @@
         "id": "3531342",
         "domain": "mediafilez",
         "filename": "FastFurnace-1.16.5-4.5.0.jar",
-        "depend_on": [],
+        "depend_on": [
+            "3750838"
+        ],
         "state": "install"
     },
     {
         "id": "4030016",
         "domain": "mediafilez",
         "filename": "FastWorkbench-1.16.5-4.6.2.jar",
-        "depend_on": [],
+        "depend_on": [
+            "3750838"
+        ],
         "state": "install"
     },
     {
@@ -80,7 +84,9 @@
         "id": "3584024",
         "domain": "mediafilez",
         "filename": "JEITweaker-1.16.5-1.1.0.49.jar",
-        "depend_on": [],
+        "depend_on": [
+            "4277433"
+        ],
         "state": "install"
     },
     {

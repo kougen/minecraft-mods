@@ -2,9 +2,15 @@ import requests
 import os, shutil
 from sys import platform
 from globals import mod_separator
-
 from pathlib import Path
 
+def get_path(pathname: str) -> str:
+	target_path = ""
+	while not check_path(target_path):
+			target_path = input(f'Enter the {pathname} path: ')
+			if not check_path(target_path):
+				print(f'{pathname.capitalize()} path does not exist!')
+	return target_path
 
 def curr_dir() -> str:
 	return os.path.dirname(os.path.realpath(__file__))

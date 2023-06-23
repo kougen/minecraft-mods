@@ -2,12 +2,11 @@ import os
 import shutil
 import requests
 from baselib import is_downloadable, create_dir, proj_root, curr_dir, clear_dir, minecraft_path
-from colors import *
 from globals import *
 from typing import List
 import json
 from zipfile import ZipFile
-from picker import SingleMenu
+from selection_picker_joshika39 import *
 
 zip_url = "https://github.com/joshika39/minecraft-mods/raw/main/data/mods.zip"
 pack_url = "https://raw.githubusercontent.com/joshika39/minecraft-mods/main/mod-downloader/config/packs.json"
@@ -145,10 +144,10 @@ class Mod:
         self.depend_on_str = depend_on_str
         self.local_dir = os.path.join(mod_file_dir, self.category)
         self.local_path = os.path.join(mod_file_dir, self.category, self.filename)
-        if state != 'inactive' or state == "download":
-            self.link = f'https://{self.domain}.forgecdn.net/files/{link_id(mod_id)}{self.filename}'
-            if os.path.exists(self.local_dir) and os.path.exists(self.local_path):
-                self.download()
+        if self.state != 'inactive' or self.state == "download":
+            self.link = f'https://{self.domain}.forgecdn.net/files/{link_id(self.mod_id)}{self.filename}'
+        else:
+            self.link = None
 
     def depend_on_to_str(self) -> list[str]:
         data = [dep.mod_id for dep in self.depend_on]
@@ -179,19 +178,26 @@ class Mod:
 
     def copy2(self, path: str):
         dest = os.path.join(path, self.filename)
-        if os.path.exists(self.local_dir) and os.path.exists(self.local_path):
-            if not os.path.exists(dest) and self.state == "install":
-                shutil.copyfile(self.local_path, dest)
-                print(f'Copying: {self.local_path} -> {dest}')
-                if self.depend_on is not None and len(self.depend_on) > 0:
-                    for dep in self.depend_on:
-                        dep.copy2(path)
-        else:
-            print(f"Local mod not found: {self.local_path}")
+        if not os.path.exists(self.local_path):
+            create_dir(self.local_dir)
+            if self.link is not None:
+                if os.path.exists(self.local_dir) and not os.path.exists(self.local_path):
+                    self.download()
+        
+        if not os.path.exists(dest) and self.state == "install" and os.path.exists(self.local_path):
+            shutil.copyfile(self.local_path, dest)
+            print(f'Copying: {self.local_path} -> {dest}')
+        if self.depend_on is not None and len(self.depend_on) > 0:
+            for dep in self.depend_on:
+                dep.copy2(path)
+            
 
     def remove(self):
         print(f"Removing: {self.local_path}")
         os.remove(os.path.join(mod_file_dir, self.local_path))
+        if self.depend_on is not None and len(self.depend_on) > 0:
+            for dep in self.depend_on:
+                dep.remove()
 
 
 class ModPack:
@@ -200,11 +206,8 @@ class ModPack:
         return cls(pack_json['name'], pack_json['display_name'], pack_json['description'], pack_content)
 
     @classmethod
-    def create_pack(cls) -> 'ModPack':
-        name = input('Enter a pack name: ')
-        display_name = input('Enter a display name: ')
-        description = input('Enter a description: ')
-        return cls(name, display_name, description, [])
+    def create_pack(cls, name, display_name, description, mods) -> 'ModPack':
+        return cls(name, display_name, description, mods)
 
     @classmethod
     def init_pack(cls, existing_pack: 'ModPack') -> 'ModPack':
@@ -247,6 +250,10 @@ class ModPack:
                     count += 1
             oredered[category] = mod_category_content
         return count, oredered
+
+    def remove_mods(self, mods_to_remove: list[Mod]):
+        new_list = set(self.pack_content) - set(mods_to_remove)
+        self.pack_content = new_list
                 
 class ModManager:
     mod_list = []  # type: List[Mod]
@@ -266,8 +273,8 @@ class ModManager:
                     mod = Mod.load_from_json(mod_data, category)
                     if mod:
                         self.mod_list.append(mod)
-                        if not os.path.exists(mod.local_path) and mod.state != "inactive":
-                            mod.download()
+                        # if not os.path.exists(mod.local_path) and mod.state != "inactive":
+                        #     mod.download()
                         if category not in self.mod_categories:
                             self.mod_categories.append(category)
 
@@ -282,8 +289,11 @@ class ModManager:
         self.mod_categories.clear()
 
     def print(self):
+        print(f'Mod count: {len(self.mod_list)}')
+        self.mod_list.sort(key=lambda m: m.name)
         for mod in self.mod_list:
             print(mod)
+        input("Press any key to continue...")
 
     def mod_to_json(self):
         for category in self.mod_categories:
@@ -357,7 +367,7 @@ class PackManager:
 
     def select_mod_packs(self) -> ModPack:
         if self.mod_packs is not None:
-            return SingleMenu("Select a modpack:", self.mod_packs, None).show()
+            return SingleMenu("Select a modpack:", self.mod_packs).show()
 
     def get_pack_content_by_name(self, name):
         for pack in self.mod_packs:

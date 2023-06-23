@@ -3,7 +3,9 @@
         "id": "3467280",
         "domain": "mediafilez",
         "filename": "alexsmobs-1.12.1.jar",
-        "depend_on": [],
+        "depend_on": [
+            "3441028"
+        ],
         "state": "install"
     },
     {
@@ -17,7 +19,9 @@
         "id": "4120133",
         "domain": "mediafilez",
         "filename": "mowziesmobs-1.5.27.jar",
-        "depend_on": [],
+        "depend_on": [
+            "4182600"
+        ],
         "state": "install"
     }
 ]

@@ -30,7 +30,9 @@
         "id": "3553840",
         "domain": "mediafilez",
         "filename": "ftb-library-forge-1605.3.4-build.90.jar",
-        "depend_on": [],
+        "depend_on": [
+            "3857643"
+        ],
         "state": "install"
     },
     {
@@ -39,7 +41,8 @@
         "filename": "ftb-quests-forge-1605.3.6-build.98.jar",
         "depend_on": [
             "3376819",
-            "3553840"
+            "3553840",
+            "3535953"
         ],
         "state": "install"
     },

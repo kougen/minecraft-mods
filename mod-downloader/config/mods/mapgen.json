@@ -24,7 +24,9 @@
         "id": "3838362",
         "domain": "mediafilez",
         "filename": "EnchantmentDescriptions-1.16.5-7.1.20.jar",
-        "depend_on": [],
+        "depend_on": [
+            "3732239"
+        ],
         "state": "install"
     },
     {
@@ -35,16 +37,16 @@
         "state": "install"
     },
     {
-        "id": "3515707",
+        "id": "4101892",
         "domain": "mediafilez",
-        "filename": "Waystones_1.16.5-7.6.4.jar",
+        "filename": "tombstone-6.8.7-1.16.5.jar",
         "depend_on": [],
         "state": "install"
     },
     {
-        "id": "4101892",
+        "id": "3515707",
         "domain": "mediafilez",
-        "filename": "tombstone-6.8.7-1.16.5.jar",
+        "filename": "Waystones_1.16.5-7.6.4.jar",
         "depend_on": [],
         "state": "install"
     }

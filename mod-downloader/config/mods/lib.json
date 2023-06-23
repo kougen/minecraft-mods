@@ -35,6 +35,13 @@
         "state": "install"
     },
     {
+        "id": "3507886",
+        "domain": "mediafilez",
+        "filename": "Cucumber-1.16.5-4.1.12.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
         "id": "3456953",
         "domain": "mediafilez",
         "filename": "curios-forge-1.16.5-4.0.5.3.jar",
@@ -80,6 +87,27 @@
         "id": "3498310",
         "domain": "mediafilez",
         "filename": "structure_gel-1.16.5-1.7.8.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3863127",
+        "domain": "mediafilez",
+        "filename": "supermartijn642corelib-1.0.19-forge-mc1.16.5.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3346366",
+        "domain": "mediafilez",
+        "filename": "titanium-1.16.5-3.2.8.4-10.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3631982",
+        "domain": "mediafilez",
+        "filename": "Mantle-1.16.5-1.6.157.jar",
         "depend_on": [],
         "state": "install"
     }
