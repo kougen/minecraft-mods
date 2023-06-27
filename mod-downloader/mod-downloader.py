@@ -1,3 +1,4 @@
+import time
 from mod import ModManager, PackManager
 from selection_picker_joshika39 import SingleMenu, MenuWrapper, FunctionItem
 from baselib import minecraft_path, check_path, get_path, curr_dir, create_dir
@@ -59,13 +60,21 @@ if args.server and pack is not None:
 				SingleMenu(f"Previous paths", prev_paths, callback=copy_to_path),
 				FunctionItem("New Path", new_server_path),
 				FunctionItem("Clear previous paths", clear_prev_paths)
-			]).show()
-
-
-		
+			]).show()	
 else:
-	if pack is not None:
-		copy_to_target(mod_mgr, pack.pack_content, minecraft_path())
-
-input("Press Enter to exit...")
+	def copy_client():
+		if pack is not None:
+			copy_to_target(mod_mgr, pack.pack_content, minecraft_path())
+	def clear_mods():
+		mods_content = os.listdir(minecraft_path())
+		for content in mods_content:
+			target = os.path.join(minecraft_path(), content)
+			if os.path.exists(target):
+				print(f"Removing: {target}")
+				os.remove(target)
+				
+	MenuWrapper("Select an operation", [
+		FunctionItem("Clear mods", clear_mods),
+		FunctionItem("Copy mods", copy_client)
+	]).show()
 
