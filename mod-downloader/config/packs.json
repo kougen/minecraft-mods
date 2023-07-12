@@ -291,5 +291,13 @@
             "3672855",
             "4297564"
         ]
+    },
+    {
+        "name": "jhost",
+        "display_name": "Hege mods",
+        "description": "Played by some cool people",
+        "pack_content": [
+            "3562127"
+        ]
     }
 ]

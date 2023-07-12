@@ -1,5 +1,6 @@
 import os
 import shutil
+from verions import Version
 import requests
 from baselib import is_downloadable, create_dir, proj_root, curr_dir, clear_dir, minecraft_path
 from globals import *
@@ -7,12 +8,13 @@ from typing import List
 import json
 from zipfile import ZipFile
 from selection_picker_joshika39 import *
-
+import newmod
 zip_url = "https://github.com/joshika39/minecraft-mods/raw/main/data/mods.zip"
 pack_url = "https://raw.githubusercontent.com/joshika39/minecraft-mods/main/mod-downloader/config/packs.json"
 
 zip_path = os.path.join(proj_root(), 'data', 'mods.zip')
 json_dir = os.path.join(proj_root(), 'data', 'mods')
+dev_json_dir = os.path.join(proj_root(), 'mod-downloader', 'config', 'mods')
 mod_file_dir = os.path.join(proj_root(), 'data', 'jars')
 pack_path = os.path.join(proj_root(), 'data', 'packs.json')
 dev_pack_path = os.path.join(proj_root(), 'mod-downloader', 'config', 'packs.json')
@@ -154,9 +156,13 @@ class Mod:
         return data
 
     def serializable_attrs(self):
-        props = {'id': self.mod_id, 'domain': self.domain, 'filename': self.filename,
-                 'depend_on': self.depend_on_to_str(),
-                 'state': self.state}
+        props = {
+            'id': self.mod_id, 
+            'domain': self.domain, 
+            'filename': self.filename,
+            'depend_on': self.depend_on_to_str(),
+            'state': self.state
+        }
         return props
 
     def download(self) -> bool:
@@ -257,14 +263,18 @@ class ModPack:
                 
 class ModManager:
     mod_list = []  # type: List[Mod]
+    new_mod_list = []  # type: List[newmod.Mod]
+    
     mod_categories = []
 
     def __init__(self, is_local=False):
         if len(self.mod_list) > 0:
             raise Exception
         init(is_local)
+        if is_local:
+            json_dir = dev_json_dir
         for file in os.listdir(json_dir):
-            if file.endswith('.json'):
+            if file.endswith('.json') and "new" not in file:
                 file_path = os.path.join(json_dir, file)
                 json_data = open(file_path, 'r').read()
                 mods_data = json.loads(json_data)
@@ -273,6 +283,9 @@ class ModManager:
                     mod = Mod.load_from_json(mod_data, category)
                     if mod:
                         self.mod_list.append(mod)
+                        n_mod = newmod.Mod(mod.mod_id, file_path, os.path.join(dev_json_dir, f'new{category}.json'), mod.category)
+                        n_mod.setup(mod.domain, mod.filename, mod.depend_on_str, mod.state)
+                        self.new_mod_list.append(n_mod)
                         # if not os.path.exists(mod.local_path) and mod.state != "inactive":
                         #     mod.download()
                         if category not in self.mod_categories:

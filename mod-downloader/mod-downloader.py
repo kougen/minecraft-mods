@@ -12,11 +12,17 @@ prefs = os.path.join(curr_dir(), 'config', 'config.json')
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--server', '-s', action='store_true', help='Copy the mods to the server\'s folder.')
+parser.add_argument('--local', action='store_true', help='Use the local mod json files. (For Developers)')
 args = parser.parse_args()
 
-mod_mgr = ModManager()
-pack_mgr = PackManager(mod_mgr)
-pack = pack_mgr.select_mod_packs()
+if args.local:
+	mod_mgr = ModManager(True)
+	pack_mgr = PackManager(mod_mgr, True)
+	pack = pack_mgr.select_mod_packs()
+else:
+	mod_mgr = ModManager()
+	pack_mgr = PackManager(mod_mgr)
+	pack = pack_mgr.select_mod_packs()
 
 if args.server and pack is not None:
 	def copy_to_path(path: str):

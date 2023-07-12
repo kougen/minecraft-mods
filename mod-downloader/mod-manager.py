@@ -125,6 +125,13 @@ def remove_mod_from_modpack():
         pack.remove_mods(selection)
         pack_manager.packs_to_json()
 
+
+def sos_fucntion():
+    for mod in mod_manager.new_mod_list:
+        print(mod)
+        mod.save()
+    _ = input("press any key to continue")
+
 main_menu = MenuWrapper(
     "Select Operation", [
         MenuWrapper("Select mod Operation", [
@@ -147,7 +154,8 @@ main_menu = MenuWrapper(
                 FunctionItem("Add Mod", add_mod_to_modpack),
                 FunctionItem("Remove Mod", remove_mod_from_modpack),
             ]),
-        ])
+        ]),
+        FunctionItem("Sos", sos_fucntion)
 ])
 
 main_menu.show()

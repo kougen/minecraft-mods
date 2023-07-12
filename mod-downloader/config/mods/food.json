@@ -35,6 +35,15 @@
         "state": "install"
     },
     {
+        "id": "3443481",
+        "domain": "mediafilez",
+        "filename": "nethers_delight-2.1.jar",
+        "depend_on": [
+            "3765350"
+        ],
+        "state": "install"
+    },
+    {
         "id": "3276350",
         "domain": "mediafilez",
         "filename": "pamhc2crops-1.16.3-1.0.2.jar",

@@ -7,9 +7,23 @@
         "state": "install"
     },
     {
+        "id": "3842754",
+        "domain": "mediafilez",
+        "filename": "Blades+Plus+1.0.1+-+1.16.5.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
         "id": "3346467",
         "domain": "mediafilez",
         "filename": "cfm-7.0.0pre22-1.16.3.jar",
+        "depend_on": [],
+        "state": "install"
+    },
+    {
+        "id": "3668972",
+        "domain": "mediafilez",
+        "filename": "Cyan+Warrior+Swords+Mod+3.4+(1.16.5).jar",
         "depend_on": [],
         "state": "install"
     },
@@ -48,7 +62,8 @@
         "domain": "mediafilez",
         "filename": "MysticalAgriculture-1.16.5-4.2.6.jar",
         "depend_on": [
-            "3507886"
+            "3507886",
+            "3847029"
         ],
         "state": "install"
     },
@@ -105,6 +120,13 @@
         "depend_on": [
             "3631982"
         ],
+        "state": "install"
+    },
+    {
+        "id": "3783768",
+        "domain": "mediafilez",
+        "filename": "WeaponThrow-1.16.4-5.7.jar",
+        "depend_on": [],
         "state": "install"
     }
 ]

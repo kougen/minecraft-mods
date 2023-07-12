@@ -12,5 +12,12 @@
         "filename": "item-filters-forge-1605.2.5-build.9.jar",
         "depend_on": [],
         "state": "install"
+    },
+    {
+        "id": "3847029",
+        "domain": "mediafilez",
+        "filename": "Patchouli-1.16.4-53.3.jar",
+        "depend_on": [],
+        "state": "install"
     }
 ]

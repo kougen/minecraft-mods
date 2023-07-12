@@ -1,3 +1,4 @@
+from zipfile import ZipFile
 import requests
 import os, shutil
 from sys import platform
@@ -78,3 +79,72 @@ def minecraft_path() -> str:
 
 def check_path(path: str) -> bool:
 	return os.path.exists(path)
+
+def remove_numbers(filename: str):
+    return ''.join([i for i in filename if not i.isdigit()])
+
+
+def remove_special(filename: str, name_separator='-'):
+    return ''.join([i for i in filename if i.isalnum() or i == name_separator])
+
+def construct_name(name: str, name_separator='-'):
+    name = remove_numbers(name)
+    name = name.replace('-', name_separator)
+    name = name.replace('_', name_separator)
+    name = name.replace('reforged', '')
+    name = name.replace('build', '')
+    name = name.replace('forge', '')
+    name = name.replace('version', '')
+    name = name.replace('-v', '')
+    name = name.replace('-mc', '')
+    name = name.replace('.jar', '')
+    name = remove_special(name)
+    for i in range(5, 2, -1):
+        name = name.replace(name_separator * i, name_separator)
+
+    while name.endswith(name_separator):
+        name = name[:-1]
+    while name.startswith(name_separator):
+        name = name[1:]
+    return name.lower()
+
+def download_config(zip_path: str, pack_path: str, pack_url: str, zip_url: str):
+    r = requests.get(zip_url, allow_redirects=True)
+    open(zip_path, 'wb').write(r.content)
+    r = requests.get(pack_url, allow_redirects=True)
+    open(pack_path, 'wb').write(r.content)
+
+
+def pack_mods(zip_path: str):
+    mods_path = os.path.join(proj_root(), 'mod-downloader', 'config', 'mods')
+    with ZipFile(zip_path, 'w') as zip_obj:
+        for mod in os.listdir(mods_path):
+            file_path = os.path.join(mods_path, mod)
+            if os.path.exists(file_path) and file_path.endswith('.json'):
+                zip_obj.write(file_path, mod)
+
+
+def unpack_mods(zip_path: str):
+    if not os.path.exists(zip_path):
+        download_config()
+    with ZipFile(zip_path, 'r') as zip_obj:
+        path = os.path.join(proj_root(), 'data', 'mods')
+        create_dir(path)
+        os.chdir(path)
+        zip_obj.extractall()
+
+def init(json_dir: str, mod_file_dir: str, dev_pack_path: str, pack_path: str, zip_path: str, is_local=False):
+    create_dir(os.path.join(proj_root(), 'data'))
+    create_dir(json_dir)
+    create_dir(mod_file_dir)
+    if is_local:
+        clear_dir(json_dir)
+        pack_mods()
+        unpack_mods()
+        shutil.copyfile(dev_pack_path, pack_path)
+        if len(os.listdir(json_dir)) <= 0 or not os.path.exists(zip_path):
+            download_config()
+            unpack_mods()
+    else:
+        download_config()
+        unpack_mods()
