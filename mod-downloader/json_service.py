@@ -25,7 +25,7 @@ class JsonService():
         if '/' in key:
             return self.read_subkey(key.split('/'), self._data)
         else:
-            return self.read_subkey([key], self._data)
+            return self.read_subkey([key], self._data) or None
 
     def has_key(self, key: str) -> bool:
         if '/' in key:

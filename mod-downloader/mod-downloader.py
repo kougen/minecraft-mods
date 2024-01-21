@@ -1,4 +1,3 @@
-import time
 from mod import ModManager, PackManager
 from selection_picker_joshika39 import SingleMenu, MenuWrapper, FunctionItem
 from baselib import minecraft_path, check_path, get_path, curr_dir, create_dir

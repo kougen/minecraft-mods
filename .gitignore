@@ -10,3 +10,4 @@ dist/
 data/*
 !data/mods.zip
 /**/config.json
+venv/

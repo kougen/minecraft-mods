@@ -19,7 +19,6 @@ mod_file_dir = os.path.join(proj_root(), 'data', 'jars')
 pack_path = os.path.join(proj_root(), 'data', 'packs.json')
 dev_pack_path = os.path.join(proj_root(), 'mod-downloader', 'config', 'packs.json')
 
-
 def init(is_local=False):
     create_dir(os.path.join(proj_root(), 'data'))
     create_dir(json_dir)
@@ -273,6 +272,8 @@ class ModManager:
         init(is_local)
         if is_local:
             json_dir = dev_json_dir
+        else:
+            json_dir = os.path.join(proj_root(), 'data', 'mods')
         for file in os.listdir(json_dir):
             if file.endswith('.json') and "new" not in file:
                 file_path = os.path.join(json_dir, file)
