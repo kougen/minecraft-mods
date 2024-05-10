@@ -6,7 +6,7 @@ from baselib import construct_name
 
 from json_service import JsonService
 from verions import Version
-from selection_picker_joshika39 import *
+from advanced_selector import *
 
 class Mod():
     depend_on = []  # type: list['Mod']
