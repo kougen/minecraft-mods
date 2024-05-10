@@ -1,13 +1,12 @@
 import os
 import shutil
-from verions import Version
 import requests
 from baselib import is_downloadable, create_dir, proj_root, curr_dir, clear_dir, minecraft_path
 from globals import *
 from typing import List
 import json
 from zipfile import ZipFile
-from selection_picker_joshika39 import *
+from advanced_selector import *
 import newmod
 zip_url = "https://github.com/joshika39/minecraft-mods/raw/main/data/mods.zip"
 pack_url = "https://raw.githubusercontent.com/joshika39/minecraft-mods/main/mod-downloader/config/packs.json"
