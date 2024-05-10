@@ -1,5 +1,5 @@
 from mod import Mod, ModPack, ModManager, PackManager, pack_mods, unpack_mods
-from selection_picker_joshika39 import SingleMenu, MultiMenu, MenuWrapper, FunctionItem
+from advanced_selector import SingleMenu, MultiMenu, MenuWrapper, FunctionItem
 import os
 import time
 from baselib import is_downloadable
@@ -10,10 +10,12 @@ MOD_SEPARATOR = ';'
 mod_manager = ModManager(True)
 pack_manager = PackManager(mod_manager, True)
 
+
 def remove_selected_mods(selected_mods):
     for mod in selected_mods:
         if mod in mod_manager.mod_list:
             mod_manager.mod_list.remove(mod)
+
 
 def add_single_mod():
     mod_id = input("Enter mod id: ")
@@ -49,7 +51,9 @@ def add_single_pack():
         pack_manager.mod_packs.append(pack)
         pack_manager.packs_to_json()
 
+
 def add_multiple_mod():
+    global DEFAULT_IMPORT_PATH
     if not os.path.exists(DEFAULT_IMPORT_PATH):
         print("Default file not found: " + DEFAULT_IMPORT_PATH)
         DEFAULT_IMPORT_PATH = input("Enter filepath")
@@ -63,6 +67,7 @@ def add_multiple_mod():
         if mod not in mod_manager.get_mod_filenames():
             mod_manager.mod_list.append(mod)
 
+
 def list_contents(selected):
     os.system('cls')
     pack = ModPack.init_pack(selected)
@@ -74,6 +79,7 @@ def list_contents(selected):
             print(f'{mod}')
     input('Press any key to continue...')
 
+
 def modify_mod_state():
     valid_states = ['install', 'download', 'inactive']
     state = SingleMenu("New State:", valid_states).show()
@@ -82,6 +88,7 @@ def modify_mod_state():
         for mod in mods:
             mod.state = state
     mod_manager.mod_to_json()
+
 
 def add_deps_to_mod():
     target_mod = SingleMenu("Mod to modify", mod_manager.mod_list).show()  # type: Mod
@@ -93,10 +100,12 @@ def add_deps_to_mod():
                     target_mod.depend_on.append(dep)
             mod_manager.mod_to_json()
 
+
 def modify_mod_dependencies():
     target_mods = MultiMenu("Target mods", mod_manager.mod_list).show()
 
-def add_mod_to_modpack():
+
+def add_mod_to_mod_pack():
     pack = SingleMenu("Select a modpack", pack_manager.mod_packs).show()  #type: ModPack
     if pack is not None:
         deps = []
@@ -118,7 +127,8 @@ def add_mod_to_modpack():
                 pack.pack_content.append(mod)
         pack_manager.packs_to_json()
 
-def remove_mod_from_modpack():
+
+def remove_mod_from_mod_pack():
     pack = SingleMenu("Select a modpack", pack_manager.mod_packs).show()  #type: ModPack
     if pack is not None:
         selection = MultiMenu("Select the mods:", pack.pack_content).show()
@@ -126,11 +136,12 @@ def remove_mod_from_modpack():
         pack_manager.packs_to_json()
 
 
-def sos_fucntion():
+def sos_function():
     for mod in mod_manager.new_mod_list:
         print(mod)
         mod.save()
     _ = input("press any key to continue")
+
 
 main_menu = MenuWrapper(
     "Select Operation", [
@@ -141,7 +152,7 @@ main_menu = MenuWrapper(
             FunctionItem("List all mods", mod_manager.print),
             MenuWrapper("Mod Dependencies", [
                 FunctionItem("Add Deps", add_deps_to_mod),
-                FunctionItem("Remove Deps", remove_mod_from_modpack),
+                FunctionItem("Remove Deps", remove_mod_from_mod_pack),
                 FunctionItem("Edit Deps", modify_mod_dependencies)
             ]),
             FunctionItem("Pack mods", pack_mods),
@@ -151,11 +162,11 @@ main_menu = MenuWrapper(
             FunctionItem("Create a pack", add_single_pack),
             SingleMenu("List Pack Content", pack_manager.mod_packs, list_contents),
             MenuWrapper("Modify Pack Content", [
-                FunctionItem("Add Mod", add_mod_to_modpack),
-                FunctionItem("Remove Mod", remove_mod_from_modpack),
+                FunctionItem("Add Mod", add_mod_to_mod_pack),
+                FunctionItem("Remove Mod", remove_mod_from_mod_pack),
             ]),
         ]),
-        FunctionItem("Sos", sos_fucntion)
+        FunctionItem("Sos", sos_function)
 ])
 
 main_menu.show()
