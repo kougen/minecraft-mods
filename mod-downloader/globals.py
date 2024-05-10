@@ -16,7 +16,6 @@ B_I = '\x1B[1;3m'
 UNDERLINE = '\033[4m'
 
 
-
 mod_conf = 'config/mods.conf.loc'
 name_separator = '-'
 mod_separator = '\t'
