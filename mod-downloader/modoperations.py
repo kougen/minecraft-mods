@@ -1,5 +1,4 @@
 from mod import Mod, ModManager, init, installed_mods_list
-import os
 from baselib import *
 
 
