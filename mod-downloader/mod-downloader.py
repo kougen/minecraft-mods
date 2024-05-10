@@ -1,6 +1,6 @@
 import time
 from mod import ModManager, PackManager
-from selection_picker_joshika39 import SingleMenu, MenuWrapper, FunctionItem
+from advanced_selector import SingleMenu, MenuWrapper, FunctionItem
 from baselib import minecraft_path, check_path, get_path, curr_dir, create_dir
 from modoperations import copy_to_target
 import json
@@ -71,6 +71,7 @@ else:
 	def copy_client():
 		if pack is not None:
 			copy_to_target(mod_mgr, pack.pack_content, minecraft_path())
+
 	def clear_mods():
 		mods_content = os.listdir(minecraft_path())
 		for content in mods_content:
