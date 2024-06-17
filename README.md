@@ -1,5 +1,10 @@
 # Minecraft Mod Manager (MMM)
 
+> [!WARNING]
+> This is an archived project and is no longer maintained.
+> The complexity of the project has increased and the project has been moved to a new repository and a new base.
+> The new repository uses C# and it can be found [here](https://github.com/kougen/mod-manager).
+
 ## Usage
 
 1. Download the latest release from here: [Latest Release](https://github.com/joshika39/minecraft-mods/releases/latest)
