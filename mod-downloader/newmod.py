@@ -5,7 +5,6 @@ import os
 from baselib import construct_name
 
 from json_service import JsonService
-from verions import Version
 from advanced_selector import *
 
 class Mod():
